@@ -11,7 +11,7 @@
  * 
  * @package    PostmarkInbound
  * @author     Joffrey Jaffeux
- * @copyright  2011 Joffrey Jaffeux
+ * @copyright  2012 Joffrey Jaffeux
  * @license    DBAD License
  */
 
