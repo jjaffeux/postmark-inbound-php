@@ -45,7 +45,7 @@ Authors
 **Joffrey Jaffeux**
 
 + http://twitter.com/joffreyjaffeux
-+ http://github.com/joffreyjaffeux
++ http://github.com/jjaffeux
 
 License
 ---------------------
