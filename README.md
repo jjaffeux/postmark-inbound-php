@@ -23,10 +23,10 @@ Have a bug? Please create an issue here on GitHub!
 Contributions
 -------------
 
-1- Fork
-2- Write tests (using enhance http://www.enhance-php.com/Content/Documentation/)
-3- Write Code
-4- Pull request
+* Fork
+* Write tests (using enhance http://www.enhance-php.com/Content/Documentation/)
+* Write Code
+* Pull request
 
 Thanks for your help.
 
@@ -34,9 +34,9 @@ Thanks for your help.
 TODO
 ----
 
-1- Write more tests
-2- Rewrite attachments
-3- Better examples
+* Write more tests
+* Rewrite attachments
+* Better examples
 
 
 Authors
