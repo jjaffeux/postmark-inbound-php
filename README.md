@@ -7,7 +7,8 @@ This is a simple API wrapper for Postmark Inbound Hook (http://developer.postmar
 Usage
 -----
 
-``` include 'lib/postmark_inbound.php';
+``` php
+include 'lib/postmark_inbound.php';
 $inbound = New PostmarkInbound(file_get_contents('php://input'));
 //OR for local testing
 $inbound = New PostmarkInbound(file_get_contents(/path/to/file.json'));
