@@ -20,7 +20,7 @@ class PostmarkInbound {
 	public function __construct($json) 
 	{
 		$this->json = $this->get_json($json);
-		$this->source = $this->json_to_array($json);
+		$this->source = $this->json_to_array($this->json);
 	}
 
 	public function subject() 
@@ -99,10 +99,11 @@ class PostmarkInbound {
 		return $this->source->HtmlBody;
 	}
 
-	public function headers($asked_name = 'Date')
+	public function headers($name = 'Date')
 	{
-		foreach($this->source->Headers as $header) {
-			if($header->Name == $asked_name) {
+		foreach($this->source->Headers as $header)
+		{
+			if($header->Name == $name) {
 				return $header->Value;
 			}
 		}
@@ -112,7 +113,8 @@ class PostmarkInbound {
 
 	public function attachments()
 	{
-		foreach ($this->source->Attachments as &$attachment) {
+		foreach ($this->source->Attachments as &$attachment)
+		{
 			$attachment = New Attachment($attachment);
 		}
 
@@ -186,15 +188,18 @@ Class Attachment extends PostmarkInbound {
 
 	public function download($dir = '', $allowed_content_types = array(), $max_content_length = '')
 	{
-		if(empty($dir)) {
+		if(empty($dir)) 
+		{
 			throw new Exception('Posmark Inbound Error: you must provide the upload path');
 		}
 
-		if( ! empty($max_content_length) AND $this->content_length() > $max_content_length) {
+		if( ! empty($max_content_length) AND $this->content_length() > $max_content_length) 
+		{
 			throw new Exception('Posmark Inbound Error: the file size is over '.$max_content_length);
 		}
 
-		if( ! empty($allowed_content_types) AND ! in_array($this->content_type(), $allowed_content_types)) {
+		if( ! empty($allowed_content_types) AND ! in_array($this->content_type(), $allowed_content_types)) 
+		{
 			throw new Exception('Posmark Inbound Error: the file type '.$this->content_type().' is not allowed');
 		}
 

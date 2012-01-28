@@ -9,7 +9,6 @@ function exception_handler($exception) {
 
 set_exception_handler('exception_handler');
 
-
 //load json
 $inbound = New PostmarkInbound(file_get_contents(getcwd().'/tests/fixtures/valid_http_post.json'));
 
