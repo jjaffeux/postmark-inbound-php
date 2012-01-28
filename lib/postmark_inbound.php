@@ -17,132 +17,28 @@
 
 class PostmarkInbound {
 
-	public function __construct($json) 
-	{
-		$this->json = $this->get_json($json);
-		$this->source = $this->json_to_array($this->json);
-	}
+	public static $source = array();
+	public static $json = '';
 
-	public function subject() 
-	{
-		return $this->source->Subject;
-	}
-
-	public function from() 
-	{
-		return str_replace('"', '', $this->source->From);
-	}
-
-	public function from_name()
-	{
-		return $this->from_name_and_email_parser(0);
-	}
-
-	public function from_email() 
-	{
-		return $this->from_name_and_email_parser(1);
-	}
-
-	// 0 name, 1 email
-	private function from_name_and_email_parser($match = NULL)
-	{
-		if(preg_match('/^.+<(.+)>$/', $this->from(), $matches) AND $match !== NULL)
-		{
-			return trim(rtrim(strip_tags($matches[$match])));
-		}
-
-		return FALSE;
-	}
-
-	public function to()
-	{
-		return $this->source->To;
-	}
-
-	public function bcc()
-	{
-		return $this->source->Bcc;
-	}
-
-	public function cc()
-	{
-		return $this->source->Cc;
-	}
-
-	public function reply_to()
-	{
-		return $this->source->ReplyTo;
-	}
-
-	public function mailbox_hash()
-	{
-		return $this->source->MailboxHash;
-	}
-
-	public function tag()
-	{
-		return $this->source->Tag;
-	}
-
-	public function message_id()
-	{
-		return $this->source->MessageID;
-	}
-
-	public function text_body()
-	{
-		return $this->source->TextBody;
-	}
-
-	public function html_body()
-	{
-		return $this->source->HtmlBody;
-	}
-
-	public function headers($name = 'Date')
-	{
-		foreach($this->source->Headers as $header)
-		{
-			if($header->Name == $name) {
-				return $header->Value;
-			}
-		}
-
-		return $this->from();
-	}
-
-	public function attachments()
-	{
-		foreach ($this->source->Attachments as &$attachment)
-		{
-			$attachment = New Attachment($attachment);
-		}
-
-		return $this->source->Attachments;
-	}
-
-	public function has_attachments()
-	{
-		if( ! $this->attachments())
-		{
-			return FALSE;
-		}
-
-		return TRUE;
-	}
-
-	private function get_json($json) 
-	{
-		if (empty($json)) {
+	public function __construct($json) {
+		if(empty($json)) {
 			throw new Exception('Posmark Inbound Error: you must provide json data');
 		}
 
-		return $json;
+		self::$json = $json;
+		self::$source = $this->json_to_array(self::$json);
 	}
 
-	private function json_to_array() 
-	{
-		$source = json_decode($this->json, FALSE);
+	public static function json() {
+		return self::$json;
+	}
+
+	public static function source() {
+		return self::$source;
+	}
+
+	private function json_to_array() {
+		$source = json_decode(self::$json, FALSE);
 
 		switch (json_last_error()) {
 			case JSON_ERROR_NONE:
@@ -157,55 +53,164 @@ class PostmarkInbound {
 		}
 	}
 
+	public function subject() {
+		return self::source()->Subject;
+	}
+
+	public function from() {
+		return str_replace('"', '', self::source()->From);
+	}
+
+	public function from_name() {
+		return $this->from_name_and_email_parser(0);
+	}
+
+	public function from_email() 
+	{
+		return $this->from_name_and_email_parser(1);
+	}
+
+	// 0 name, 1 email
+	private function from_name_and_email_parser($match = NULL) {
+		if(preg_match('/^.+<(.+)>$/', $this->from(), $matches) AND $match !== NULL) {
+			return trim(rtrim(strip_tags($matches[$match])));
+		}
+
+		return FALSE;
+	}
+
+	public function to() {
+		return self::source()->To;
+	}
+
+	public function bcc() {
+		return self::source()->Bcc;
+	}
+
+	public function cc() {
+		return self::source()->Cc;
+	}
+
+	public function reply_to() {
+		return self::source()->ReplyTo;
+	}
+
+	public function mailbox_hash() {
+		return self::source()->MailboxHash;
+	}
+
+	public function tag() {
+		return self::source()->Tag;
+	}
+
+	public function message_id() {
+		return self::source()->MessageID;
+	}
+
+	public function text_body() {
+		return self::source()->TextBody;
+	}
+
+	public function html_body() {
+		return self::source()->HtmlBody;
+	}
+
+	public function headers($name = 'Date') {
+		foreach(self::source()->Headers as $header) {
+			if($header->Name == $name) {
+				return $header->Value;
+			}
+		}
+
+		return $this->from();
+	}
+
+	public function attachments() {
+		return New Attachments(self::source()->Attachments);
+	}
+
+	public function has_attachments() {
+		if( ! $this->attachments()) {
+			return FALSE;
+		}
+
+		return TRUE;
+	}
+
 }
 
-Class Attachment extends PostmarkInbound {
+Class Attachments extends PostmarkInbound implements Iterator{
 
-	public function __construct($attachment)
-	{
+	public function __construct($attachments) {
+		$this->attachments = $attachments;
+		$this->position = 0;
+	}
+
+	function get($key) {
+		
+	}
+
+	function rewind() {
+		$this->position = 0;
+	}
+
+	function current() {
+		return New Attachment($this->attachments[$this->position]);
+	}
+
+	function key() {
+		return $this->position;
+	}
+
+	function next() {
+		++$this->position;
+	}
+
+	function valid() {
+		return isset($this->attachments[$this->position]);
+	}
+
+}
+
+Class Attachment extends Attachments {
+
+	public function __construct($attachment) {
 		$this->attachment = $attachment;
 	}
 
-	public function name()
-	{
+	public function name() {
 		return $this->attachment->Name;
 	}
 
-	public function content_type()
-	{
+	public function content_type() {
 		return $this->attachment->ContentType;
 	}
 
-	public function content_length()
-	{
+	public function content_length() {
 		return $this->attachment->ContentLength;
 	}
 
-	public function read()
-	{
+	public function read() {
 		return base64_decode($this->attachment->Content);
 	}
 
-	public function download($dir = '', $allowed_content_types = array(), $max_content_length = '')
-	{
-		if(empty($dir)) 
-		{
+	public function download($directory = '', $allowed_content_types = array(), $max_content_length = '') {
+		if(empty($directory)) {
 			throw new Exception('Posmark Inbound Error: you must provide the upload path');
 		}
 
-		if( ! empty($max_content_length) AND $this->content_length() > $max_content_length) 
-		{
+		if( ! empty($max_content_length) AND $this->content_length() > $max_content_length) {
 			throw new Exception('Posmark Inbound Error: the file size is over '.$max_content_length);
 		}
 
-		if( ! empty($allowed_content_types) AND ! in_array($this->content_type(), $allowed_content_types)) 
-		{
+		if( ! empty($allowed_content_types) AND ! in_array($this->content_type(), $allowed_content_types)) {
 			throw new Exception('Posmark Inbound Error: the file type '.$this->content_type().' is not allowed');
 		}
 
-		return file_put_contents($dir . $this->name(), $this->read());
+		if( ! file_put_contents($directory . $this->name(), $this->read())) {
+			throw new Exception('Posmark Inbound Error: cannot save the file, check path and rights');
+		}
 	}
 
 }
-
 /* End of file postmark_inbound.php */

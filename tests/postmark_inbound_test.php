@@ -2,7 +2,7 @@
  
 class PostmarkInbound_test extends \Enhance\TestFixture {
 	public function setUp() {
-		$this->inbound = new PostmarkInbound(file_get_contents(getcwd().'/tests/fixtures/valid_http_post.json'));
+		$this->inbound = new PostmarkInbound(file_get_contents(dirname(__FILE__).'/fixtures/valid_http_post.json'));
 	}
 	
 	public function should_have_a_subject() {
@@ -57,20 +57,12 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		\Enhance\Assert::areIdentical('api-hash@inbound.postmarkapp.com', $this->inbound->to());
 	}
 
-	public function should_haver_header() {
+	public function should_have_header() {
 		\Enhance\Assert::areIdentical('Thu, 31 Mar 2011 12:01:17 -0400', $this->inbound->headers("Date"));
 	}
 
-	public function json_provided() {
-		\Enhance\Assert::isNotNull($this->inbound->json);
-	}
-
-	public function json_is_valid() {
-		\Enhance\Assert::isNotNull($this->inbound->json);
-	}
-
 	public function should_have_two_attachments() {
-		\Enhance\Assert::areIdentical(2, count($this->inbound->attachments()));
+		\Enhance\Assert::areIdentical(2, count($this->inbound->attachments()->attachments));
 	}
 
 	public function should_have_attachment() {
@@ -96,8 +88,11 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 	}
 
 	public function attachment_should_download() {
-		foreach($this->inbound->attachments() as $a) {
-			\Enhance\Assert::isInt($a->download(dirname(__FILE__).'/'));
+		$attachments = $this->inbound->attachments();
+		foreach($attachments as $a) {
+			$a->download(dirname(__FILE__).'/');
+			\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/chart.png'));
+			\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/chart2.png'));
 		}
 	}
 
