@@ -112,6 +112,19 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 	public function should_return_first_attachment() {
 		$attachments = $this->inbound->attachments();
 		$first_attachment = $attachments->get(0);
+		
+		\Enhance\Assert::areIdentical('chart.png', $first_attachment->name());
+		\Enhance\Assert::areIdentical('image/png', $first_attachment->content_type());
+		\Enhance\Assert::areIdentical(2000, $first_attachment->content_length());
+	}
+
+	public function should_return_second_attachment() {
+		$attachments = $this->inbound->attachments();
+		$second_attachment = $attachments->get(1);
+		
+		\Enhance\Assert::areIdentical('chart2.png', $second_attachment->name());
+		\Enhance\Assert::areIdentical('image/png', $second_attachment->content_type());
+		\Enhance\Assert::areIdentical(1000, $second_attachment->content_length());
 	}
 
 }
