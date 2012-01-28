@@ -57,8 +57,20 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		\Enhance\Assert::areIdentical('api-hash@inbound.postmarkapp.com', $this->inbound->to());
 	}
 
-	public function should_have_header() {
+	public function default_header_should_have_date() {
+		\Enhance\Assert::areIdentical('Thu, 31 Mar 2011 12:01:17 -0400', $this->inbound->headers());
+	}
+
+	public function should_have_header_date() {
 		\Enhance\Assert::areIdentical('Thu, 31 Mar 2011 12:01:17 -0400', $this->inbound->headers("Date"));
+	}
+
+	public function should_have_header_mime_version() {
+		\Enhance\Assert::areIdentical('1.0', $this->inbound->headers("MIME-Version"));
+	}
+
+	public function should_have_header_received_spf() {
+		\Enhance\Assert::areIdentical('None (no SPF record) identity=mailfrom; client-ip=209.85.212.52; helo=mail-vw0-f52.google.com; envelope-from=bob@bob.com; receiver=4e8d6dec234dd90018e7bfd2b5d79107@inbound.postmarkapp.com', $this->inbound->headers("Received-SPF"));
 	}
 
 	public function should_have_two_attachments() {
@@ -91,9 +103,10 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		$attachments = $this->inbound->attachments();
 		foreach($attachments as $a) {
 			$a->download(dirname(__FILE__).'/');
-			\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/chart.png'));
-			\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/chart2.png'));
 		}
+
+		\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/chart.png'));
+		\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/chart2.png'));
 	}
 
 }

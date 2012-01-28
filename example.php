@@ -32,10 +32,16 @@ $inbound->headers('Received-SPF');
 $inbound->has_attachments(); //boolean
 $attachments = $inbound->attachments();
 
+$first_attachment = $attachments->get(0);
+$first_attachment->name();
+
+$second_attachment = $attachments->get(1);
+$second_attachment->content_length();
+
 foreach($attachments as $a) {
-	echo "<p>Attachment Name : ".$a->name()."</p>";
-	echo "<p>Attachment Content Type : ".$a->content_type()."</p>";
-	echo "<p>Attachment Content Length : ".$a->content_length()."</p>";
+	$a->name();
+	$a->content_type();
+	$a->content_length();
 	$a->download(dirname(__FILE__).'/tests/fixtures/', array('allowed_content_types' => 'image/png'), '10000'); //second and third are optionnals
 }
 
