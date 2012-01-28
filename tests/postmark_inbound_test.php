@@ -109,4 +109,9 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/chart2.png'));
 	}
 
+	public function should_return_first_attachment() {
+		$attachments = $this->inbound->attachments();
+		$first_attachment = $attachments->get(0);
+	}
+
 }

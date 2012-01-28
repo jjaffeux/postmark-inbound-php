@@ -17,7 +17,8 @@ function exception_handler($exception) {
 set_exception_handler('exception_handler');
 
 //load json
-$inbound = New PostmarkInbound(file_get_contents(dirname(__FILE__).'/tests/fixtures/valid_http_post.json'));
+$inbound = New PostmarkInbound(file_get_contents('php://input'));
+// or test with $inbound = New PostmarkInbound(file_get_contents(dirname(__FILE__).'/tests/fixtures/valid_http_post.json'));
 
 /* Content */
 $inbound->from();
@@ -41,10 +42,16 @@ $inbound->headers('Received-SPF');
 $inbound->has_attachments(); //boolean
 $attachments = $inbound->attachments();
 
+$first_attachment = $attachments->get(0);
+$first_attachment->name();
+
+$second_attachment = $attachments->get(1);
+$second_attachment->content_length();
+
 foreach($attachments as $a) {
-	echo "<p>Attachment Name : ".$a->name()."</p>";
-	echo "<p>Attachment Content Type : ".$a->content_type()."</p>";
-	echo "<p>Attachment Content Length : ".$a->content_length()."</p>";
+	$a->name();
+	$a->content_type();
+	$a->content_length();
 	$a->download(dirname(__FILE__).'/tests/fixtures/', array('allowed_content_types' => 'image/png'), '10000'); //second and third are optionnals
 }
 
