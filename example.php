@@ -8,7 +8,8 @@ function exception_handler($exception) {
 set_exception_handler('exception_handler');
 
 //load json
-$inbound = New PostmarkInbound(file_get_contents(dirname(__FILE__).'/tests/fixtures/valid_http_post.json'));
+$inbound = New PostmarkInbound(file_get_contents('php://input'));
+// or test with $inbound = New PostmarkInbound(file_get_contents(dirname(__FILE__).'/tests/fixtures/valid_http_post.json'));
 
 /* Content */
 $inbound->from();

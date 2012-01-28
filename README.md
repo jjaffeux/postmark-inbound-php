@@ -74,7 +74,6 @@ TODO
 ----
 
 * Write more tests
-* Better examples
 
 
 Authors
