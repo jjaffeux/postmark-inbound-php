@@ -121,7 +121,7 @@ class PostmarkInbound {
 		return $this->source->Attachments;
 	}
 
-	public function has_attachment()
+	public function has_attachments()
 	{
 		if( ! $this->attachments())
 		{

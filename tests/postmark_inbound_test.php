@@ -74,7 +74,7 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 	}
 
 	public function should_have_attachment() {
-		\Enhance\Assert::areIdentical(TRUE, $this->inbound->has_attachment());
+		\Enhance\Assert::areIdentical(TRUE, $this->inbound->has_attachments());
 	}
 	
 	public function attachment_should_have_content_length() {
