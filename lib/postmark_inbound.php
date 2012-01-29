@@ -129,12 +129,12 @@ class PostmarkInbound {
 
 	public function headers($name = 'Date') {
 		foreach(self::source()->Headers as $header) {
-			if($header->Name == $name) {
+			if(isset($header->Name) AND $header->Name == $name) {
 				return $header->Value;
 			}
 		}
 
-		return $this->from();
+		return FALSE;
 	}
 
 	public function attachments() {

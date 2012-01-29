@@ -79,6 +79,10 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		\Enhance\Assert::areIdentical('1.0', $this->inbound->headers("MIME-Version"));
 	}
 
+	public function unknown_header_should_return_fakse() {
+		\Enhance\Assert::isFalse($this->inbound->headers("WTF"));
+	}
+
 	public function default_spam_should_have_status() {
 		\Enhance\Assert::areIdentical('No', $this->inbound->spam());
 	}
@@ -110,7 +114,7 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 	public function should_have_attachment() {
 		\Enhance\Assert::areIdentical(TRUE, $this->inbound->has_attachments());
 	}
-	
+
 	public function attachment_should_have_content_length() {
 		foreach($this->inbound->attachments() as $a) {
 			\Enhance\Assert::isNotNull($a->content_length());
