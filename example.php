@@ -56,7 +56,7 @@ foreach($attachments as $a) {
 	
 	$options = array(
 		'directory' => dirname(__FILE__).'/tests/fixtures/',
-		'allowed_content_types' => array('image/png', 'text/html', 'text/plain', //optionnal
+		'allowed_content_types' => array('image/png', 'text/html', 'text/plain'), //optionnal
 		'max_content_length' => 10000 //optionnal
 	)
 
