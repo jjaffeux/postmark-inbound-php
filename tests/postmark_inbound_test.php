@@ -2,7 +2,7 @@
  
 class PostmarkInbound_test extends \Enhance\TestFixture {
 	public function setUp() {
-		$this->inbound = new PostmarkInbound(file_get_contents(dirname(__FILE__).'/fixtures/valid_http_post.json'));
+		$this->inbound = \Enhance\Core::getCodeCoverageWrapper('PostmarkInbound', array(file_get_contents(dirname(__FILE__).'/fixtures/valid_http_post.json')));
 		$this->attachments = $this->inbound->attachments();
 	}
 
