@@ -79,6 +79,26 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		\Enhance\Assert::areIdentical('1.0', $this->inbound->headers("MIME-Version"));
 	}
 
+	public function default_spam_should_have_status() {
+		\Enhance\Assert::areIdentical('No', $this->inbound->spam());
+	}
+
+	public function should_have_spam_version() {
+		\Enhance\Assert::areIdentical('SpamAssassin 3.3.1 (2010-03-16) on rs-mail1', $this->inbound->spam("X-Spam-Checker-Version"));
+	}
+
+	public function should_have_spam_satus() {
+		\Enhance\Assert::areIdentical('No', $this->inbound->spam("X-Spam-Status"));
+	}
+
+	public function should_have_spam_score() {
+		\Enhance\Assert::areIdentical('-0.8', $this->inbound->spam("X-Spam-Score"));
+	}
+
+	public function should_have_spam_test() {
+		\Enhance\Assert::areIdentical('DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_LOW', $this->inbound->spam("X-Spam-Tests"));
+	}
+
 	public function should_have_header_received_spf() {
 		\Enhance\Assert::areIdentical('None (no SPF record) identity=mailfrom; client-ip=209.85.212.52; helo=mail-vw0-f52.google.com; envelope-from=bob@bob.com; receiver=4e8d6dec234dd90018e7bfd2b5d79107@inbound.postmarkapp.com', $this->inbound->headers("Received-SPF"));
 	}

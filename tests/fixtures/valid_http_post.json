@@ -48,6 +48,21 @@
     {
       "Name": "Content-Type",
       "Value": "multipart\/mixed"
+    },
+    {
+      "X-Spam-Checker-Version": "SpamAssassin 3.3.1 (2010-03-16) on rs-mail1"
+    },
+    {
+      "X-Spam-Status": "No"
+    },
+    {
+      "X-Spam-Score": "-0.8"
+    },
+    {
+      "X-Spam-Tests": "DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_LOW"
+    },
+    {
+      "Received-SPF": "Pass (sender SPF authorized) identity=mailfrom; client-ip=209.85.160.42; helo=mail-pw0-f42.google.com; envelope-from=support@postmarkapp.com; receiver=451d9b70cf9364d23ff6f9d51d870251569e+ahoy@inbound.postmarkapp.com "
     }
   ],
   "HtmlBody": "<p>We no speak americano</p>",

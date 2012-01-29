@@ -115,6 +115,18 @@ class PostmarkInbound {
 		return self::source()->HtmlBody;
 	}
 
+	public function spam($name = 'X-Spam-Status') {
+		foreach(self::source()->Headers as $sections => $values) {
+			foreach($values as $key => $value) {
+				if($key == $name) {
+					return $value;
+				}
+			}
+		}
+
+		return FALSE;
+	}
+
 	public function headers($name = 'Date') {
 		foreach(self::source()->Headers as $header) {
 			if($header->Name == $name) {
