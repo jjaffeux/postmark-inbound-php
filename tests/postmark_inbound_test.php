@@ -5,6 +5,16 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		$this->inbound = new PostmarkInbound(file_get_contents(dirname(__FILE__).'/fixtures/valid_http_post.json'));
 	}
 	
+	public function tearDown() {
+		if(file_exists(dirname(__FILE__).'/chart.png')) {
+			unlink(dirname(__FILE__).'/chart.png');
+		}
+
+		if(file_exists(dirname(__FILE__).'/chart2.png')) {
+			unlink(dirname(__FILE__).'/chart2.png');
+		}
+	}
+	
 	public function should_have_a_subject() {
 		\Enhance\Assert::areIdentical('Hi There', $this->inbound->subject());
 	}
@@ -112,19 +122,32 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 	public function should_return_first_attachment() {
 		$attachments = $this->inbound->attachments();
 		$first_attachment = $attachments->get(0);
-		
+
 		\Enhance\Assert::areIdentical('chart.png', $first_attachment->name());
 		\Enhance\Assert::areIdentical('image/png', $first_attachment->content_type());
 		\Enhance\Assert::areIdentical(2000, $first_attachment->content_length());
+
+		$first_attachment->download(dirname(__FILE__).'/');
+		\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/chart.png'));
 	}
 
 	public function should_return_second_attachment() {
 		$attachments = $this->inbound->attachments();
 		$second_attachment = $attachments->get(1);
-		
+
 		\Enhance\Assert::areIdentical('chart2.png', $second_attachment->name());
 		\Enhance\Assert::areIdentical('image/png', $second_attachment->content_type());
 		\Enhance\Assert::areIdentical(1000, $second_attachment->content_length());
+
+		$second_attachment->download(dirname(__FILE__).'/');
+		\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/chart2.png'));
+	}
+
+	public function souldnt_retourn_third_attachment() {
+		$attachments = $this->inbound->attachments();
+		$third_attachment = $attachments->get(2);
+
+		\Enhance\Assert::isFalse($third_attachment);
 	}
 
 }

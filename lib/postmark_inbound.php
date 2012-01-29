@@ -148,7 +148,12 @@ Class Attachments extends PostmarkInbound implements Iterator{
 
 	function get($key) {
 		$this->position = $key;
-		return New Attachment($this->attachments[$key]);
+
+		if( ! empty($this->attachments[$key])) {
+			return New Attachment($this->attachments[$key]);
+		} else {
+			return FALSE;
+		}
 	}
 
 	function rewind() {
