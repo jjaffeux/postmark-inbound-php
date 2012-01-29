@@ -91,6 +91,22 @@ Authors
 + http://twitter.com/joffreyjaffeux
 + http://github.com/jjaffeux
 
+Inspiration
+-----------
+
+Thx to Randy Schmidt for the original ruby wrapper
++ https://github.com/r38y
++ http://forge38.com/
+
+
+Other libraries
+---------------
+
++ Ruby : https://github.com/r38y/postmark-mitt
++ Python : https://github.com/jpadilla/postmark-inbound-python
+
+
+
 License
 ---------------------
 
