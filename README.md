@@ -37,6 +37,7 @@ $inbound->text_body();
 $inbound->headers();  //default to get Date
 $inbound->headers('MIME-Version');
 $inbound->headers('Received-SPF');
+$inbound->headers('Date');
 
 /* Spam */
 $inbound->spam(); //default to get status
@@ -66,7 +67,7 @@ foreach($attachments as $a) {
 		'directory' => dirname(__FILE__).'/tests/fixtures/',
 		'allowed_content_types' => array('image/png', 'text/html', 'text/plain'), //optionnal
 		'max_content_length' => 10000 //optionnal
-	)
+	);
 
 	$a->download($options);
 }
