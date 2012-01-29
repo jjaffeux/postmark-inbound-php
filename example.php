@@ -39,6 +39,8 @@ $first_attachment->name();
 $second_attachment = $attachments->get(1);
 $second_attachment->content_length();
 
+$third_attachment = $attachments->get(2); // will return FALSE if it doesn't exist
+
 foreach($attachments as $a) {
 	$a->name();
 	$a->content_type();
