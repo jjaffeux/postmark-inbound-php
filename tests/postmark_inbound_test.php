@@ -203,4 +203,12 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		\Enhance\Assert::isFalse($third_attachment);
 	}
 
+	public function shouldnt_accept_invalid_json() {
+		try {
+			$this->inbound = new PostmarkInbound(file_get_contents(dirname(__FILE__).'/fixtures/invalid_http_post.json'));
+		}
+		catch (Exception $e) {
+			\Enhance\Assert::contains('Posmark Inbound Error: json format is invalid', $e->getMessage());
+		}
+	}
 }
