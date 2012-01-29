@@ -60,6 +60,12 @@ $inbound::json();
 $inbound::source();
 ``` 
 
+FAQ
+---
+
+* Using the library with codeigniter : https://github.com/jjaffeux/postmark-inbound-php/issues/1
+* 
+
 Bug tracker
 -----------
 
@@ -105,7 +111,6 @@ Other libraries
 
 + Ruby : https://github.com/r38y/postmark-mitt
 + Python : https://github.com/jpadilla/postmark-inbound-python
-
 
 
 License
