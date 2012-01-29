@@ -80,7 +80,7 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		\Enhance\Assert::areIdentical('1.0', $this->inbound->headers("MIME-Version"));
 	}
 
-	public function unknown_header_should_return_fakse() {
+	public function unknown_header_should_return_false() {
 		\Enhance\Assert::isFalse($this->inbound->headers("WTF"));
 	}
 
@@ -147,7 +147,7 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/chart2.png'));
 	}
 
-	public function attachment_shouldnt_download_png() {
+	public function attachment_shouldnt_download_file_not_in_allowed_content_types() {
 		try {
 			foreach($this->attachments as $a) {
 				$a->download(array('directory' => dirname(__FILE__).'/', 'allowed_content_types' => array('text/html')));
@@ -161,7 +161,7 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		\Enhance\Assert::isFalse(file_exists(dirname(__FILE__).'/chart2.png'));
 	}
 
-	public function attachment_shouldnt_big_file() {
+	public function attachment_shouldnt_download_file_over_max_content_length() {
 		try {
 			foreach($this->attachments as $a) {
 				$a->download(array('directory' => dirname(__FILE__).'/', 'max_content_length' => '400'));
