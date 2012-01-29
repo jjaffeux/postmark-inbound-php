@@ -38,6 +38,13 @@ $inbound->headers();  //default to get Date
 $inbound->headers('MIME-Version');
 $inbound->headers('Received-SPF');
 
+/* Spam */
+$inbound->spam(); //default to get status
+$inbound->spam('X-Spam-Checker-Version');
+$inbound->spam('X-Spam-Score');
+$inbound->spam('X-Spam-Tests');
+$inbound->spam('X-Spam-Status');
+
 /* Attachments */
 $inbound->has_attachments(); //boolean
 $attachments = $inbound->attachments();
