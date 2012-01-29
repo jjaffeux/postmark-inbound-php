@@ -107,6 +107,10 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		\Enhance\Assert::areIdentical('None (no SPF record) identity=mailfrom; client-ip=209.85.212.52; helo=mail-vw0-f52.google.com; envelope-from=bob@bob.com; receiver=4e8d6dec234dd90018e7bfd2b5d79107@inbound.postmarkapp.com', $this->inbound->headers("Received-SPF"));
 	}
 
+	public function unknown_spam_should_return_fakse() {
+		\Enhance\Assert::isFalse($this->inbound->spam("WTF"));
+	}
+
 	public function should_have_two_attachments() {
 		\Enhance\Assert::areIdentical(2, count($this->inbound->attachments()->attachments));
 	}
