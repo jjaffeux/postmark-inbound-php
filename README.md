@@ -64,7 +64,7 @@ FAQ
 ---
 
 * Using the library with codeigniter : https://github.com/jjaffeux/postmark-inbound-php/issues/1
-* 
+
 
 Bug tracker
 -----------
