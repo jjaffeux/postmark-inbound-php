@@ -53,7 +53,14 @@ foreach($attachments as $a) {
 	$a->name();
 	$a->content_type();
 	$a->content_length();
-	$a->download(dirname(__FILE__).'/tests/fixtures/', array('allowed_content_types' => 'image/png'), '10000'); //second and third are optionnals
+	
+	$options = array(
+		'directory' => dirname(__FILE__).'/tests/fixtures/',
+		'allowed_content_types' => array('image/png', 'text/html', 'text/plain', //optionnal
+		'max_content_length' => 10000 //optionnal
+	)
+
+	$a->download($options);
 }
 
 /* Get raw data */
