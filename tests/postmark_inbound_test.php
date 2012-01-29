@@ -211,4 +211,9 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 			\Enhance\Assert::contains('Posmark Inbound Error: json format is invalid', $e->getMessage());
 		}
 	}
+
+	public function should_have_json() {
+		\Enhance\Assert::contains('"Attachments": [', $this->inbound->json());
+		\Enhance\Assert::isString($this->inbound->json());
+	}
 }
