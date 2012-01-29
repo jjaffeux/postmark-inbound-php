@@ -3,8 +3,9 @@
 class PostmarkInbound_test extends \Enhance\TestFixture {
 	public function setUp() {
 		$this->inbound = new PostmarkInbound(file_get_contents(dirname(__FILE__).'/fixtures/valid_http_post.json'));
+		$this->attachments = $this->inbound->attachments();
 	}
-	
+
 	public function tearDown() {
 		if(file_exists(dirname(__FILE__).'/chart.png')) {
 			unlink(dirname(__FILE__).'/chart.png');
@@ -14,7 +15,7 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 			unlink(dirname(__FILE__).'/chart2.png');
 		}
 	}
-	
+
 	public function should_have_a_subject() {
 		\Enhance\Assert::areIdentical('Hi There', $this->inbound->subject());
 	}
@@ -107,12 +108,12 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		\Enhance\Assert::areIdentical('None (no SPF record) identity=mailfrom; client-ip=209.85.212.52; helo=mail-vw0-f52.google.com; envelope-from=bob@bob.com; receiver=4e8d6dec234dd90018e7bfd2b5d79107@inbound.postmarkapp.com', $this->inbound->headers("Received-SPF"));
 	}
 
-	public function unknown_spam_should_return_fakse() {
+	public function unknown_spam_should_return_false() {
 		\Enhance\Assert::isFalse($this->inbound->spam("WTF"));
 	}
 
 	public function should_have_two_attachments() {
-		\Enhance\Assert::areIdentical(2, count($this->inbound->attachments()->attachments));
+		\Enhance\Assert::areIdentical(2, count($this->attachments->attachments));
 	}
 
 	public function should_have_attachment() {
@@ -120,60 +121,84 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 	}
 
 	public function attachment_should_have_content_length() {
-		foreach($this->inbound->attachments() as $a) {
+		foreach($this->attachments as $a) {
 			\Enhance\Assert::isNotNull($a->content_length());
 		}
 	}
 
 	public function attachment_should_have_content_type() {
-		foreach($this->inbound->attachments() as $a) {
+		foreach($this->attachments as $a) {
 			\Enhance\Assert::isNotNull($a->content_type());
 		}
 	}
 
 	public function attachment_should_have_name() {
-		foreach($this->inbound->attachments() as $a) {
+		foreach($this->attachments as $a) {
 			\Enhance\Assert::isNotNull($a->name());
 		}
 	}
 
 	public function attachment_should_download() {
-		$attachments = $this->inbound->attachments();
-		foreach($attachments as $a) {
-			$a->download(dirname(__FILE__).'/');
+		foreach($this->attachments as $a) {
+			$a->download(array('directory' => dirname(__FILE__).'/', 'allowed_content_types' => array('text/html', 'image/png')));
 		}
 
 		\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/chart.png'));
 		\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/chart2.png'));
 	}
 
+	public function attachment_shouldnt_download_png() {
+		try {
+			foreach($this->attachments as $a) {
+				$a->download(array('directory' => dirname(__FILE__).'/', 'allowed_content_types' => array('text/html')));
+			}
+		}
+		catch (Exception $e) {
+			\Enhance\Assert::contains('Posmark Inbound Error: the file type', $e->getMessage());
+		}
+
+		\Enhance\Assert::isFalse(file_exists(dirname(__FILE__).'/chart.png'));
+		\Enhance\Assert::isFalse(file_exists(dirname(__FILE__).'/chart2.png'));
+	}
+
+	public function attachment_shouldnt_big_file() {
+		try {
+			foreach($this->attachments as $a) {
+				$a->download(array('directory' => dirname(__FILE__).'/', 'max_content_length' => '400'));
+			}
+		}
+		catch (Exception $e) {
+			\Enhance\Assert::contains('Posmark Inbound Error: the file size is over', $e->getMessage());
+		}
+
+		\Enhance\Assert::isFalse(file_exists(dirname(__FILE__).'/chart.png'));
+		\Enhance\Assert::isFalse(file_exists(dirname(__FILE__).'/chart2.png'));
+	}
+
 	public function should_return_first_attachment() {
-		$attachments = $this->inbound->attachments();
-		$first_attachment = $attachments->get(0);
+		$first_attachment = $this->attachments->get(0);
 
 		\Enhance\Assert::areIdentical('chart.png', $first_attachment->name());
 		\Enhance\Assert::areIdentical('image/png', $first_attachment->content_type());
 		\Enhance\Assert::areIdentical(2000, $first_attachment->content_length());
 
-		$first_attachment->download(dirname(__FILE__).'/');
+		$first_attachment->download(array('directory' => dirname(__FILE__).'/'));
 		\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/chart.png'));
 	}
 
 	public function should_return_second_attachment() {
-		$attachments = $this->inbound->attachments();
-		$second_attachment = $attachments->get(1);
+		$second_attachment = $this->attachments->get(1);
 
 		\Enhance\Assert::areIdentical('chart2.png', $second_attachment->name());
 		\Enhance\Assert::areIdentical('image/png', $second_attachment->content_type());
 		\Enhance\Assert::areIdentical(1000, $second_attachment->content_length());
 
-		$second_attachment->download(dirname(__FILE__).'/');
+		$second_attachment->download(array('directory' => dirname(__FILE__).'/'));
 		\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/chart2.png'));
 	}
 
 	public function souldnt_retourn_third_attachment() {
-		$attachments = $this->inbound->attachments();
-		$third_attachment = $attachments->get(2);
+		$third_attachment = $this->attachments->get(2);
 
 		\Enhance\Assert::isFalse($third_attachment);
 	}

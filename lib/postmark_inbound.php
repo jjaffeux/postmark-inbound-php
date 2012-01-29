@@ -211,21 +211,35 @@ Class Attachment extends Attachments {
 	public function read() {
 		return base64_decode($this->attachment->Content);
 	}
-
-	public function download($directory = '', $allowed_content_types = array(), $max_content_length = '') {
-		if(empty($directory)) {
+	
+	/**
+	 * download
+	 *
+	 * @param array $options 
+	 * @return integer | FALSE
+	 *
+	 * List of options :
+	 * 
+	 * directory, path where you want to save the file
+	 * allowed_content_type, optionnal, if you want to restrict download to certain file types, see
+	 * http://developer.postmarkapp.com/developer-build.html#attachments for a list
+	 * max_content_length, optionnal, if you want to restrict filesize
+	 *
+	 */
+	public function download($options) {
+		if(empty($options['directory'])) {
 			throw new Exception('Posmark Inbound Error: you must provide the upload path');
 		}
 
-		if( ! empty($max_content_length) AND $this->content_length() > $max_content_length) {
-			throw new Exception('Posmark Inbound Error: the file size is over '.$max_content_length);
+		if( ! empty($options['max_content_length']) AND $this->content_length() > $options['max_content_length']) {
+			throw new Exception('Posmark Inbound Error: the file size is over '.$options['max_content_length']);
 		}
 
-		if( ! empty($allowed_content_types) AND ! in_array($this->content_type(), $allowed_content_types)) {
+		if( ! empty($options['allowed_content_types']) AND ! in_array($this->content_type(), $options['allowed_content_types'])) {
 			throw new Exception('Posmark Inbound Error: the file type '.$this->content_type().' is not allowed');
 		}
 
-		if( ! file_put_contents($directory . $this->name(), $this->read())) {
+		if(file_put_contents($options['directory'] . $this->name(), $this->read()) === FALSE) {
 			throw new Exception('Posmark Inbound Error: cannot save the file, check path and rights');
 		}
 	}
