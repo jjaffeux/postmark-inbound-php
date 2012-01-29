@@ -93,7 +93,7 @@ Contributions
 -------------
 
 * Fork
-* Write tests (using enhance http://www.enhance-php.com/Content/Documentation/)
+* Write tests (using enhance http://www.enhance-php.com/Content/Documentation/, just open test.php in your browser to launch tests)
 * Write Code
 * Pull request
 
