@@ -100,12 +100,6 @@ Contributions
 Thanks for your help.
 
 
-TODO
-----
-
-* Write more tests
-
-
 Authors
 -------
 
@@ -128,6 +122,7 @@ Other libraries
 
 + Ruby : https://github.com/r38y/postmark-mitt
 + Python : https://github.com/jpadilla/postmark-inbound-python
++ Node : https://gist.github.com/1647808
 
 
 License
