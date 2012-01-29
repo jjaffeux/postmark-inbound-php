@@ -226,7 +226,7 @@ Class Attachment extends Attachments {
 	 * max_content_length, optionnal, if you want to restrict filesize
 	 *
 	 */
-	public function download($options) {
+	public function download($options = array()) {
 		if(empty($options['directory'])) {
 			throw new Exception('Posmark Inbound Error: you must provide the upload path');
 		}

@@ -147,6 +147,17 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/chart2.png'));
 	}
 
+	public function attachment_should_download_only_when_directory_is_set() {
+		try {
+			foreach($this->attachments as $a) {
+				$a->download();
+			}
+		}
+		catch (Exception $e) {
+			\Enhance\Assert::contains('Posmark Inbound Error: you must provide the upload path', $e->getMessage());
+		}
+	}
+
 	public function attachment_shouldnt_download_file_not_in_allowed_content_types() {
 		try {
 			foreach($this->attachments as $a) {
@@ -215,5 +226,9 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 	public function should_have_json() {
 		\Enhance\Assert::contains('"Attachments": [', $this->inbound->json());
 		\Enhance\Assert::isString($this->inbound->json());
+	}
+
+	public function should_have_source() {
+		\Enhance\Assert::isObject($this->inbound->source());
 	}
 }
