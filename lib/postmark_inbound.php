@@ -62,21 +62,37 @@ class PostmarkInbound {
 	}
 
 	public function from_name() {
-		return $this->from_name_and_email_parser(0);
+		$name = $this->from_name_and_email_parser(0);
+		
+		if(filter_var($name, FILTER_VALIDATE_EMAIL)) {
+			return FALSE;
+		}
+		else {
+			return $name;
+		}
 	}
 
 	public function from_email() 
 	{
-		return $this->from_name_and_email_parser(1);
+		$email =  $this->from_name_and_email_parser(1);
+
+		if( ! empty($email) AND filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			
+			return $email;
+		}
+		else {
+			return FALSE;
+		}
 	}
 
 	// 0 name, 1 email
 	private function from_name_and_email_parser($match = NULL) {
 		if(preg_match('/^.+<(.+)>$/', $this->from(), $matches) AND $match !== NULL) {
 			return trim(rtrim(strip_tags($matches[$match])));
+		} 
+		else {
+			return trim(rtrim(strip_tags($this->from())));
 		}
-
-		return FALSE;
 	}
 
 	public function to() {

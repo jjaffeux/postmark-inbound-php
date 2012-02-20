@@ -48,8 +48,28 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		\Enhance\Assert::areIdentical('Bob Bobson <bob@bob.com>', $this->inbound->from());
 	}
 
-	public function should_pull_out_the_from_email() {
+	public function should_return_the_from_email() {
 		\Enhance\Assert::areIdentical('bob@bob.com', $this->inbound->from_email());
+	}
+
+	public function should_return_false_if_no_email_is_provided() {
+		$this->inbound->source()->From = 'Allan Chamber';
+		\Enhance\Assert::isFalse($this->inbound->from_email());
+	}
+
+	public function should_return_false_if_no_name_is_provided() {
+		$this->inbound->source()->From = 'bob@gmail.com';
+		\Enhance\Assert::isFalse($this->inbound->from_name());
+	}
+
+	public function should_return_email_if_only_email_is_provided() {
+		$this->inbound->source()->From = 'bob@gmail.com';
+		\Enhance\Assert::areIdentical('bob@gmail.com', $this->inbound->from_email());
+	}
+
+	public function should_return_name_if_only_name_is_provided() {
+		$this->inbound->source()->From = 'Bob Carpenter';
+		\Enhance\Assert::areIdentical('Bob Carpenter', $this->inbound->from_name());
 	}
 
 	public function should_pull_out_the_from_name() {

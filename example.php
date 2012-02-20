@@ -8,8 +8,9 @@ function exception_handler($exception) {
 set_exception_handler('exception_handler');
 
 //load json
-$inbound = New PostmarkInbound(file_get_contents('php://input'));
-// or test with $inbound = New PostmarkInbound(file_get_contents(dirname(__FILE__).'/tests/fixtures/valid_http_post.json'));
+//$inbound = New PostmarkInbound(file_get_contents('php://input'));
+// or test with 
+$inbound = New PostmarkInbound(file_get_contents(dirname(__FILE__).'/tests/fixtures/valid_http_post.json'));
 
 /* Content */
 $inbound->from();
@@ -21,8 +22,8 @@ $inbound->tag();
 $inbound->message_id();
 $inbound->mailbox_hash();
 $inbound->reply_to();
-$inbound->html_body();
-$inbound->text_body();
+echo $inbound->html_body();
+echo $inbound->text_body();
 
 /* Headers */
 $inbound->headers();  //default to get Date
