@@ -225,7 +225,7 @@ Class Attachment extends Attachments {
 	}
 
 	public function read() {
-		return base64_decode($this->attachment->Content);
+		return base64_decode(chunk_split($this->attachment->Content));
 	}
 	
 	/**

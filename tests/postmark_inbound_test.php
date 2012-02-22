@@ -14,6 +14,22 @@ class PostmarkInbound_test extends \Enhance\TestFixture {
 		if(file_exists(dirname(__FILE__).'/chart2.png')) {
 			unlink(dirname(__FILE__).'/chart2.png');
 		}
+
+		if(file_exists(dirname(__FILE__).'/large.png')) {
+			unlink(dirname(__FILE__).'/large.png');
+		}
+	}
+
+	public function should_open_large_attachments() {
+		$this->inbound = new PostmarkInbound(file_get_contents(dirname(__FILE__).'/fixtures/large_attachment.json'));
+		$this->attachments = $this->inbound->attachments();
+		\Enhance\Assert::areIdentical('Hi There', $this->inbound->subject());
+		
+		foreach($this->attachments as $a) {
+			$a->download(array('directory' => dirname(__FILE__).'/', 'allowed_content_types' => array('text/html', 'image/png')));
+		}
+
+		\Enhance\Assert::isTrue(file_exists(dirname(__FILE__).'/large.png'));
 	}
 
 	public function should_have_a_subject() {
