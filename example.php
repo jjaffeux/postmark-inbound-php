@@ -22,8 +22,8 @@ $inbound->tag();
 $inbound->message_id();
 $inbound->mailbox_hash();
 $inbound->reply_to();
-echo $inbound->html_body();
-echo $inbound->text_body();
+$inbound->html_body();
+$inbound->text_body();
 
 /* Headers */
 $inbound->headers();  //default to get Date
