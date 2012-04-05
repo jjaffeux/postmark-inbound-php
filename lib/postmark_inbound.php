@@ -38,7 +38,7 @@ class PostmarkInbound {
 	}
 
 	private function json_to_array() {
-		$source = json_decode(self::$json, FALSE);
+		$source = json_decode(self::$json, false);
 
 		switch (json_last_error()) {
 			case JSON_ERROR_NONE:
@@ -57,54 +57,71 @@ class PostmarkInbound {
 		return self::source()->Subject;
 	}
 
-	public function from() {
-		return str_replace('"', '', self::source()->From);
-	}
-
 	public function from_name() {
-		$name = $this->from_name_and_email_parser(0);
-		
-		if(filter_var($name, FILTER_VALIDATE_EMAIL)) {
-			return FALSE;
+		if( ! empty(self::source()->FromFull->Name)) {
+			return self::source()->FromFull->Name;
 		}
 		else {
-			return $name;
+			return false;
 		}
 	}
 
 	public function from_email() 
 	{
-		$email =  $this->from_name_and_email_parser(1);
-
-		if( ! empty($email) AND filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			
-			return $email;
-		}
-		else {
-			return FALSE;
-		}
+		return self::source()->FromFull->Email;
 	}
 
-	// 0 name, 1 email
-	private function from_name_and_email_parser($match = NULL) {
-		if(preg_match('/^.+<(.+)>$/', $this->from(), $matches) AND $match !== NULL) {
-			return trim(rtrim(strip_tags($matches[$match])));
-		} 
-		else {
-			return trim(rtrim(strip_tags($this->from())));
-		}
+	public function from() {
+		return self::source()->FromFull->Name . ' <' . self::source()->FromFull->Email . '>';
 	}
 
 	public function to() {
-		return self::source()->To;
+		$to_array = array_map(function ($to) {
+			$to = get_object_vars($to);
+
+			if( ! empty($to['Name'])) {
+				$to['name'] = $to['Name'];
+				unset($to['Name']);			
+			} else {
+				$to['name'] = 'undefined';
+			}
+
+			$to['email'] = $to['Email'];
+			unset($to['Email']);
+
+			return (object)$to;
+		}, self::source()->ToFull);
+
+		return $to_array;
 	}
 
 	public function bcc() {
 		return self::source()->Bcc;
 	}
 
+	public function date() {
+		return self::source()->Date;
+	}
+
 	public function cc() {
-		return self::source()->Cc;
+		$cc_array = array_map(function ($cc) {
+			$cc = get_object_vars($cc);
+
+			if( ! empty($cc['Name'])) {
+				$cc['name'] = $cc['Name'];
+				unset($cc['Name']);			
+			}
+			else {
+				$cc['name'] = 'undefined';
+			}
+
+			$cc['email'] = $cc['Email'];
+			unset($cc['Email']);
+
+			return (object)$cc;
+		}, self::source()->CcFull);
+
+		return $cc_array;
 	}
 
 	public function reply_to() {
@@ -140,7 +157,7 @@ class PostmarkInbound {
 			}
 		}
 
-		return FALSE;
+		return false;
 	}
 
 	public function headers($name = 'Date') {
@@ -150,7 +167,7 @@ class PostmarkInbound {
 			}
 		}
 
-		return FALSE;
+		return false;
 	}
 
 	public function attachments() {
@@ -159,10 +176,10 @@ class PostmarkInbound {
 
 	public function has_attachments() {
 		if( ! $this->attachments()) {
-			return FALSE;
+			return false;
 		}
 
-		return TRUE;
+		return true;
 	}
 
 }
@@ -180,7 +197,7 @@ Class Attachments extends PostmarkInbound implements Iterator{
 		if( ! empty($this->attachments[$key])) {
 			return New Attachment($this->attachments[$key]);
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -232,7 +249,7 @@ Class Attachment extends Attachments {
 	 * download
 	 *
 	 * @param array $options 
-	 * @return integer | FALSE
+	 * @return integer | false
 	 *
 	 * List of options :
 	 * 
@@ -255,7 +272,7 @@ Class Attachment extends Attachments {
 			throw new Exception('Posmark Inbound Error: the file type '.$this->content_type().' is not allowed');
 		}
 
-		if(file_put_contents($options['directory'] . $this->name(), $this->read()) === FALSE) {
+		if(file_put_contents($options['directory'] . $this->name(), $this->read()) === false) {
 			throw new Exception('Posmark Inbound Error: cannot save the file, check path and rights');
 		}
 	}
