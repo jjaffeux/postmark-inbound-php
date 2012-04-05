@@ -10,21 +10,29 @@ Usage
 ``` php
 include 'lib/postmark_inbound.php';
 
-//only for testing purpose
-function exception_handler($exception) {
-  echo "Uncaught exception: " . $exception->getMessage() . "\n";
-}
-set_exception_handler('exception_handler');
-
 //load json
 $inbound = New PostmarkInbound(file_get_contents('php://input'));
 // or test with $inbound = New PostmarkInbound(file_get_contents(dirname(__FILE__).'/tests/fixtures/valid_http_post.json'));
 
 /* Content */
-$inbound->from();
-$inbound->from_name();
-$inbound->from_email();
-$inbound->to();
+$inbound->from(); // Bob Bobson <bob@bob.com>
+$inbound->from_name(); // Bob Bobson
+$inbound->from_email(); // <bob@bob.com>
+
+$recipients = $inbound->to();
+
+foreach($recipients as $recipient) {
+	echo $recipient->name; //if not set prints undefined
+	echo $recipient->email;
+}
+
+$undisclosed_recipients = $inbound->cc();
+
+foreach($undisclosed_recipients as $undisclosed_recipient) {
+	echo $undisclosed_recipient->name; //if not set prints undefined
+	echo $undisclosed_recipient->email;
+}
+
 $inbound->bcc();
 $inbound->tag();
 $inbound->message_id();
@@ -32,6 +40,7 @@ $inbound->mailbox_hash();
 $inbound->reply_to();
 $inbound->html_body();
 $inbound->text_body();
+$inbound->date();
 
 /* Headers */
 $inbound->headers();  //default to get Date
