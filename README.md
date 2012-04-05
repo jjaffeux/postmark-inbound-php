@@ -16,20 +16,20 @@ $inbound = New PostmarkInbound(file_get_contents('php://input'));
 
 /* Content */
 $inbound->from(); // Bob Bobson <bob@bob.com>
-$inbound->from_name(); // Bob Bobson
+$inbound->from_name(); // Bob Bobson if not set return false
 $inbound->from_email(); // <bob@bob.com>
 
 $recipients = $inbound->to();
 
 foreach($recipients as $recipient) {
-	echo $recipient->name; //if not set prints undefined
+	echo $recipient->name; //if not set return false
 	echo $recipient->email;
 }
 
 $undisclosed_recipients = $inbound->cc();
 
 foreach($undisclosed_recipients as $undisclosed_recipient) {
-	echo $undisclosed_recipient->name; //if not set prints undefined
+	echo $undisclosed_recipient->name; //if not set return false
 	echo $undisclosed_recipient->email;
 }
 
