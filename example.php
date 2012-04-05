@@ -17,13 +17,13 @@ $inbound->from();
 $inbound->from_name();
 $inbound->from_email();
 $inbound->to();
-$inbound->cc();
 $inbound->bcc();
 $inbound->tag();
 $inbound->message_id();
 $inbound->mailbox_hash();
 $inbound->reply_to();
-$inbound->text_body();
+echo $inbound->html_body();
+echo $inbound->text_body();
 
 /* Headers */
 $inbound->headers();  //default to get Date

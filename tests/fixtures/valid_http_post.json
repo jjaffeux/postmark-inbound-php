@@ -15,18 +15,7 @@
   ],
   "Bcc": "FBI <hi@fbi.com>",
   "Cc": "Your Mom <hithere@hotmail.com>",
-  "CcFull": [
-    { 
-      "Name": "John Doe", 
-      "Email": "john.doe@wildbit.com" 
-    }, 
-    { 
-      "Name": "Jane Doe", 
-      "Email": "jane.doe@wildbit.com" 
-    } 
-  ],
   "From": "\"Bob Bobson\" <bob@bob.com>",
-  "FromFull": { "Name": "John Doe", "Email": "john.doe@wildbit.com" },
   "Headers": [
     {
       "Name": "Received-SPF",
@@ -83,16 +72,5 @@
   "Subject": "Hi There",
   "Tag": "yourit",
   "TextBody": "\nThis is awesome!\n\n",
-  "To": "api-hash@inbound.postmarkapp.com",
-  "ToFull": [ 
-    {
-      "Name": "John Doe", 
-      "Email": "john.doe@wildbit.com" 
-    }, 
-    { 
-      "Name": "Jane Doe", 
-      "Email": "jane.doe@wildbit.com" 
-    } 
-  ],
-  "Date": "Mon, 5 Mar 2012 14:33:50 +0100"
+  "To": "api-hash@inbound.postmarkapp.com"
 }

@@ -24,22 +24,7 @@ $inbound = New PostmarkInbound(file_get_contents('php://input'));
 $inbound->from();
 $inbound->from_name();
 $inbound->from_email();
-
-$recipients = $inbound->to();
-
-foreach($recipients as $recipient) {
-	echo $recipient->name; // if name is empty will print 'undefined'
-	echo $recipient->email;
-}
-
-$undisclosed_recipients =$inbound->cc();
-
-foreach($undisclosed_recipients as $undisclosed_recipient) {
-	echo $undisclosed_recipient->name; // if name is empty will print 'undefined'
-	echo $undisclosed_recipient->email;
-}
-
-
+$inbound->to();
 $inbound->bcc();
 $inbound->tag();
 $inbound->message_id();
