@@ -2,7 +2,7 @@
     "name": "jjaffeux/postmark-inbound-php",
     "type": "library",
     "description": "Postmark Inbound PHP Wrapper",
-    "version": "2.0",
+    "version": "2.0.0",
     "homepage": "https://github.com/jjaffeux/postmark-inbound-php",
     "keywords": ["postmark", "inbound", "wrapper", "api", "mails"],
     "license": "MIT",
