@@ -55,29 +55,29 @@ Recipients and Undisclosed Recipients
 -------------------------------------
 
 ``` php
-	foreach($inbound->Recipients() as $recipient) {
-		$recipient->Name;
-		$recipient->Email;
-	}
+foreach($inbound->Recipients() as $recipient) {
+	$recipient->Name;
+	$recipient->Email;
+}
 
-	foreach($inbound->UndisclosedRecipients() as $undisclosedRecipient) {
-		$undisclosedRecipient->Name;
-		$undisclosedRecipient->Email;
-	}
+foreach($inbound->UndisclosedRecipients() as $undisclosedRecipient) {
+	$undisclosedRecipient->Name;
+	$undisclosedRecipient->Email;
+}
 ``` 
 
 Attachments
 -------------------------------------
 
 ``` php
-	foreach($inbound->Attachments() as $attachment) {
-		$attachment->Name;
-		$attachment->ContentType;
-		$attachment->ContentLength;
-		$attachment->Download('/'); //takes directory as first argument
-	}
+foreach($inbound->Attachments() as $attachment) {
+	$attachment->Name;
+	$attachment->ContentType;
+	$attachment->ContentLength;
+	$attachment->Download('/'); //takes directory as first argument
+}
 
-	$inbound->HasAttachments();
+$inbound->HasAttachments();
 ``` 
 
 
