@@ -6,92 +6,79 @@ This is a simple API wrapper for Postmark Inbound Hook (http://developer.postmar
 [![Build Status](https://secure.travis-ci.org/jjaffeux/postmark-inbound-php.png?branch=master)](http://travis-ci.org/jjaffeux/postmark-inbound-php)
 
 
-Usage
+Setup
 -----
 
 ``` php
-include 'lib/postmark_inbound.php';
+require_once '../lib/Postmark/Autoloader.php';
+\Postmark\Autoloader::register();
 
-//load json
-$inbound = New PostmarkInbound(file_get_contents('php://input'));
-// or test with $inbound = New PostmarkInbound(file_get_contents(dirname(__FILE__).'/tests/fixtures/valid_http_post.json'));
-
-/* Content */
-$inbound->from(); // Bob Bobson <bob@bob.com>
-$inbound->from_name(); // Bob Bobson if not set return false
-$inbound->from_email(); // <bob@bob.com>
-
-$recipients = $inbound->to();
-
-foreach($recipients as $recipient) {
-	echo $recipient->name; //if not set return false
-	echo $recipient->email;
-}
-
-$undisclosed_recipients = $inbound->cc();
-
-foreach($undisclosed_recipients as $undisclosed_recipient) {
-	echo $undisclosed_recipient->name; //if not set return false
-	echo $undisclosed_recipient->email;
-}
-
-$inbound->bcc();
-$inbound->tag();
-$inbound->message_id();
-$inbound->mailbox_hash();
-$inbound->reply_to();
-$inbound->html_body();
-$inbound->text_body();
-$inbound->date();
-
-/* Headers */
-$inbound->headers();  //default to get Date
-$inbound->headers('MIME-Version');
-$inbound->headers('Received-SPF');
-$inbound->headers('Date');
-
-/* Spam */
-$inbound->spam(); //default to get status
-$inbound->spam('X-Spam-Checker-Version');
-$inbound->spam('X-Spam-Score');
-$inbound->spam('X-Spam-Tests');
-$inbound->spam('X-Spam-Status');
-
-/* Attachments */
-$inbound->has_attachments(); //boolean
-$attachments = $inbound->attachments();
-
-$first_attachment = $attachments->get(0);
-$first_attachment->name();
-
-$second_attachment = $attachments->get(1);
-$second_attachment->content_length();
-
-$third_attachment = $attachments->get(2); // will return FALSE if it doesn't exist
-
-foreach($attachments as $a) {
-	$a->name();
-	$a->content_type();
-	$a->content_length();
-	
-	$options = array(
-		'directory' => dirname(__FILE__).'/tests/fixtures/',
-		'allowed_content_types' => array('image/png', 'text/html', 'text/plain'), //optionnal
-		'max_content_length' => 10000 //optionnal
-	);
-
-	$a->download($options);
-}
-
-/* Get raw data */
-$inbound::json();
-$inbound::source();
+// this file should be the target of the callback you set in your postmark account
+$inbound = new \Postmark\Inbound(file_get_contents('php://input'));
 ``` 
 
-FAQ
----
+General Usage
+-------------
 
-* Using the library with codeigniter : https://github.com/jjaffeux/postmark-inbound-php/issues/1
+``` php
+$inbound->Subject();
+$inbound->FromEmail();
+$inbound->FromFull();
+$inbound->FromName();
+$inbound->Date();
+$inbound->ReplyTo();
+$inbound->MailboxHash();
+$inbound->Tag();
+$inbound->MessageID();
+$inbound->Subject();
+$inbound->TextBody();
+$inbound->HtmlBody();
+``` 
+
+Headers
+-------
+
+``` php
+$inbound->Headers(); //default to spam status
+$inbound->Headers('X-Spam-Status');
+$inbound->Headers('X-Spam-Checker-Version');
+$inbound->Headers('X-Spam-Score');
+$inbound->Headers('X-Spam-Tests');
+$inbound->Headers('Received-SPF');
+$inbound->Headers('MIME-Version');
+$inbound->Headers('Received-SPF');
+$inbound->Headers('Message-ID');
+``` 
+
+
+Recipients and Undisclosed Recipients
+-------------------------------------
+
+``` php
+	foreach($inbound->Recipients() as $recipient) {
+		$recipient->Name;
+		$recipient->Email;
+	}
+
+	foreach($inbound->UndisclosedRecipients() as $undisclosedRecipient) {
+		$undisclosedRecipient->Name;
+		$undisclosedRecipient->Email;
+	}
+``` 
+
+Attachments
+-------------------------------------
+
+``` php
+	foreach($inbound->Attachments() as $attachment) {
+		$attachment->Name;
+		$attachment->ContentType;
+		$attachment->ContentLength;
+		$attachment->Download('/'); //takes directory as first argument
+	}
+
+	$inbound->HasAttachments();
+``` 
 
 
 Bug tracker
@@ -104,7 +91,7 @@ Contributions
 -------------
 
 * Fork
-* Write tests (using enhance http://www.enhance-php.com/Content/Documentation/, just open test.php in your browser to launch tests)
+* Write tests (phpunit in the directory to run the tests)
 * Write Code
 * Pull request
 
@@ -139,4 +126,4 @@ Other libraries
 License
 ---------------------
 
-DON'T BE A DICK PUBLIC LICENSE
+MIT License
