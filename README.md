@@ -15,6 +15,9 @@ With composer :
         "jjaffeux/postmark-inbound-php": "2.0.*"
     }
 }
+```
+``` php
+$inbound = new \Postmark\Inbound(file_get_contents('php://input'));
 ``` 
 
 Without composer :
@@ -39,7 +42,6 @@ $inbound->ReplyTo();
 $inbound->MailboxHash();
 $inbound->Tag();
 $inbound->MessageID();
-$inbound->Subject();
 $inbound->TextBody();
 $inbound->HtmlBody();
 ``` 
