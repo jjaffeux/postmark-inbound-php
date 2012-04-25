@@ -8,7 +8,16 @@ This is a simple API wrapper for Postmark Inbound Hook (http://developer.postmar
 
 Setup
 -----
+With composer :
+``` json
+{
+    "require": {
+        "jjaffeux/postmark-inbound-php": "2.0.*"
+    }
+}
+``` 
 
+Without composer :
 ``` php
 require_once '../lib/Postmark/Autoloader.php';
 \Postmark\Autoloader::register();
