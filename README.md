@@ -57,7 +57,7 @@ $inbound->Headers('X-Spam-Score');
 $inbound->Headers('X-Spam-Tests');
 $inbound->Headers('Received-SPF');
 $inbound->Headers('MIME-Version');
-$inbound->Headers('Received-SPF');
+$inbound->Headers('Received-SPF'); // pass neutral fail
 $inbound->Headers('Message-ID');
 ``` 
 

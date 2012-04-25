@@ -69,8 +69,7 @@ class Postmark_Tests_Inbound extends PHPUnit_Framework_TestCase {
         $this->assertEquals($this->inbound->Headers('X-Spam-Checker-Version'), 'SpamAssassin 3.3.1 (2010-03-16) onrs-ord-pm-inbound1.wildbit.com');
         $this->assertEquals($this->inbound->Headers('X-Spam-Score'), '-0.1');
         $this->assertEquals($this->inbound->Headers('X-Spam-Tests'), 'DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,SPF_PASS');
-        $this->assertEquals($this->inbound->Headers('Received-SPF'), 'Pass (sender SPF authorized) identity=mailfrom; client-ip=209.85.160.180; helo=mail-gy0-f180.google.com; envelope-from=myUser@theirDomain.com; receiver=451d9b70cf9364d23ff6f9d51d870251569e+ahoy@inbound.postmarkapp.com');
-        $this->assertEquals($this->inbound->Headers('DKIM-Signature'), 'v=1; a=rsa-sha256; c=relaxed/relaxed;        d=wildbit.com; s=google;        h=mime-version:reply-to:date:message-id:subject:from:to:cc         :content-type;        bh=cYr/+oQiklaYbBJOQU3CdAnyhCTuvemrU36WT7cPNt0=;        b=QsegXXbTbC4CMirl7A3VjDHyXbEsbCUTPL5vEHa7hNkkUTxXOK+dQA0JwgBHq5C+1u         iuAJMz+SNBoTqEDqte2ckDvG2SeFR+Edip10p80TFGLp5RucaYvkwJTyuwsA7xd78NKT         Q9ou6L1hgy/MbKChnp2kxHOtYNOrrszY3JfQM=');
+        $this->assertEquals($this->inbound->Headers('Received-SPF'), 'pass');
         $this->assertEquals($this->inbound->Headers('MIME-Version'), '1.0');
         $this->assertEquals($this->inbound->Headers('Message-ID'), '<CAGXpo2WKfxHWZ5UFYCR3H_J9SNMG+5AXUovfEFL6DjWBJSyZaA@mail.gmail.com>');
     }

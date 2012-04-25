@@ -60,10 +60,24 @@ class Inbound {
     public function Headers($name = 'X-Spam-Status') {
         foreach($this->source->Headers as $header) {
             if(isset($header->Name) AND $header->Name == $name) {
+                if($header->Name == 'Received-SPF') {
+                    return self::_parseReceivedSpf($header->Value);
+                }
+
                 return $header->Value;
             }
+            else {
+                unset($header);
+            }
         }
-        return FALSE;
+
+        return $header ? $header : FALSE;
+    }
+
+    private static function _parseReceivedSpf($header)
+    {
+        preg_match_all('/^(\w+\b.*?){1}/', $header, $matches);
+        return strtolower($matches[1][0]);
     }
 
     public function Recipients()
@@ -106,6 +120,7 @@ class Inbound {
     }
 
 }
+
 
 Class Attachments extends \Postmark\Inbound  implements \Iterator{
 
