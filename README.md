@@ -91,6 +91,14 @@ foreach($inbound->Attachments() as $attachment) {
 $inbound->HasAttachments();
 ``` 
 
+Raw
+---
+
+``` php
+$inbound->source; //array
+$inbound->json //raw json
+``` 
+
 
 Bug tracker
 -----------
