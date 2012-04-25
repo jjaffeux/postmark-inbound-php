@@ -6,9 +6,9 @@ namespace Postmark;
  *
  * Basic Usage:
  * 
- *     $inbound = New \Postmark\Inbound(file_get_contents('php://input'));
+ *     $inbound = new \Postmark\Inbound(file_get_contents('php://input'));
  *  OR for local testing
- *     $inbound = New \Postmark\Inbound(file_get_contents('/path/to/json'));
+ *     $inbound = new \Postmark\Inbound(file_get_contents('/path/to/json'));
  * 
  * @package    PostmarkInbound
  * @author     Joffrey Jaffeux
