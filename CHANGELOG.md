@@ -4,12 +4,12 @@ CHANGELOG
 v 2.0
 -----
 
-Complete refactoring
+Refactoring
 - Travis
 - Enhance -> Phpunit
 - Autoload
 - Composer
-- Consitent API
+- Consistent API
 - New Postmark JSON fields
 
 
