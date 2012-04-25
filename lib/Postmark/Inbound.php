@@ -6,9 +6,9 @@ namespace Postmark;
  *
  * Basic Usage:
  * 
- *     $inbound = New PostmarkInbound(file_get_contents('php://input'));
+ *     $inbound = New \Postmark\Inbound(file_get_contents('php://input'));
  *  OR for local testing
- *     $inbound = New PostmarkInbound(file_get_contents(/path/to/file.json'));
+ *     $inbound = New \Postmark\Inbound(file_get_contents('/path/to/json'));
  * 
  * @package    PostmarkInbound
  * @author     Joffrey Jaffeux
@@ -110,7 +110,6 @@ class Inbound {
     public function attachments() {
         return New Attachments($this->source->Attachments);
     }
-
 
     public function HasAttachments() {
         return count($this->source->Attachments) > 0 ? TRUE : FALSE;
