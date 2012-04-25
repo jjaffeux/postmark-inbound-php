@@ -23,16 +23,6 @@ class Inbound {
        $this->source = $this->_jsonToArray();
     }
 
-    public static function source()
-    {
-        return $this->source;
-    }
-
-    public static function json()
-    {
-        return $this->json;
-    }
-
     private function _jsonToArray()
     {
         $source = json_decode($this->json, FALSE);
