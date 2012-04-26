@@ -1,0 +1,48 @@
+[
+    {
+        "name": "jjaffeux/postmark-inbound-php",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "time": "2012-04-26 19:54:01",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jjaffeux/postmark-inbound-php",
+            "reference": "b583cff49d8b1ee0ec48f9c73e1873717e992e12"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/jjaffeux/postmark-inbound-php/zipball/b583cff49d8b1ee0ec48f9c73e1873717e992e12",
+            "reference": "b583cff49d8b1ee0ec48f9c73e1873717e992e12",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2"
+        },
+        "type": "library",
+        "installation-source": "source",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Joffrey Jaffeux",
+                "email": "j.jaffeux@gmail.com",
+                "homepage": "http://www.twitter.com/joffreyjaffeux"
+            }
+        ],
+        "description": "Postmark Inbound PHP Wrapper",
+        "homepage": "https://github.com/jjaffeux/postmark-inbound-php",
+        "keywords": [
+            "api",
+            "wrapper",
+            "postmark",
+            "inbound",
+            "mails"
+        ],
+        "autoload": {
+            "psr-0": {
+                "Postmark": "lib/"
+            }
+        }
+    }
+]

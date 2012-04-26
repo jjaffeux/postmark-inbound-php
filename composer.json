@@ -17,6 +17,6 @@
         "php": ">=5.2"
     },
     "autoload": {
-        "psr-0": { "Postmark_": "lib/" }
+        "psr-0": { "Postmark": "lib/" }
     }
 }

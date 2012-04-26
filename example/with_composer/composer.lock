@@ -1,0 +1,12 @@
+{
+    "hash": "b4a51df9dd1cd6478009aab74d4a9055",
+    "packages": [
+        {
+            "package": "jjaffeux/postmark-inbound-php",
+            "version": "dev-master",
+            "source-reference": "b583cff49d8b1ee0ec48f9c73e1873717e992e12"
+        }
+    ],
+    "packages-dev": null,
+    "aliases": []
+}
