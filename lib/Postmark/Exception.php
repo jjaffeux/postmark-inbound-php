@@ -2,4 +2,4 @@
 
 namespace Postmark;
 
-class PostmarkInboundException extends \Exception {}
+class InboundException extends \Exception {}

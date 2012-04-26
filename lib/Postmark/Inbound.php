@@ -20,10 +20,10 @@ class Inbound {
     public $json;
     public $source;
 
-    public function __construct($json)
+    public function __construct($json = FALSE)
     {
         if(empty($json)) {
-            throw new PostmarkInboundException('Posmark Inbound Error: you must provide a json source');
+            throw new InboundException('Posmark Inbound Error: you must provide a json source');
         }
 
         $this->json = $json;
@@ -39,7 +39,7 @@ class Inbound {
                 return $source;
             break;
             default:
-                throw new PostmarkInboundException('Posmark Inbound Error: json format error');
+                throw new InboundException('Posmark Inbound Error: json format error');
             break;
         }
     }

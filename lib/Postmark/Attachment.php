@@ -17,8 +17,6 @@ Class Attachment extends \Postmark\Inbound {
     }
     
     public function Download($directory) {
-        if(file_put_contents($directory . $this->Name, $this->_read()) === false) {
-            throw new PostmarkInboundException('Posmark Inbound Error: cannot save the file, check path and rights');
-        }
+        file_put_contents($directory . $this->Name, $this->_read());
     }
 }
