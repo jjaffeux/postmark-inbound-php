@@ -13,59 +13,59 @@ include('Attachment.php');
  * @copyright  2012 Joffrey Jaffeux
  * @license    MIT License
  * @example    $inbound = new \Postmark\Inbound(file_get_contents('php://input'));
- * @example    $inbound = new \Postmark\Inbound(file_get_contents('/path/to/json')); 
+ * @example    $inbound = new \Postmark\Inbound(file_get_contents('/path/to/Json')); 
  */
 class Inbound {
 
-    public $json;
-    public $source;
+    public $Json;
+    public $Source;
 
-    public function __construct($json = FALSE)
+    public function __construct($Json = FALSE)
     {
-        if(empty($json)) {
-            throw new InboundException('Posmark Inbound Error: you must provide a json source');
+        if(empty($Json)) {
+            throw new InboundException('Posmark Inbound Error: you must provide a Json Source');
         }
 
-        $this->json = $json;
-        $this->source = $this->_jsonToArray();
+        $this->Json = $Json;
+        $this->Source = $this->_jsonToArray();
     }
 
     private function _jsonToArray()
     {
-        $source = json_decode($this->json, FALSE);
+        $Source = Json_decode($this->Json, FALSE);
 
         switch (json_last_error()) {
             case JSON_ERROR_NONE:
-                return $source;
+                return $Source;
             break;
             default:
-                throw new InboundException('Posmark Inbound Error: json format error');
+                throw new InboundException('Posmark Inbound Error: Json format error');
             break;
         }
     }
 
     public function __call($name, $arguments)
     {
-        return ($this->source->$name) ? $this->source->$name : FALSE;
+        return ($this->Source->$name) ? $this->Source->$name : FALSE;
     }
 
     public function FromEmail()
     {
-        return $this->source->FromFull->Email;
+        return $this->Source->FromFull->Email;
     }
 
     public function FromFull()
     {
-        return $this->source->FromFull->Name . ' <' . $this->source->FromFull->Email . '>';
+        return $this->Source->FromFull->Name . ' <' . $this->Source->FromFull->Email . '>';
     }
 
     public function FromName()
     {
-        return $this->source->FromFull->Name;
+        return $this->Source->FromFull->Name;
     }
 
     public function Headers($name = 'X-Spam-Status') {
-        foreach($this->source->Headers as $header) {
+        foreach($this->Source->Headers as $header) {
             if(isset($header->Name) AND $header->Name == $name) {
                 if($header->Name == 'Received-SPF') {
                     return self::_parseReceivedSpf($header->Value);
@@ -89,12 +89,12 @@ class Inbound {
 
     public function Recipients()
     {
-        return self::_parseRecipientsAndUndisclosedRecipients($this->source->ToFull);
+        return self::_parseRecipientsAndUndisclosedRecipients($this->Source->ToFull);
     }
 
     public function UndisclosedRecipients()
     {
-        return self::_parseRecipientsAndUndisclosedRecipients($this->source->CcFull);
+        return self::_parseRecipientsAndUndisclosedRecipients($this->Source->CcFull);
     }
 
     private static function _parseRecipientsAndUndisclosedRecipients($recipients)
@@ -119,11 +119,11 @@ class Inbound {
     }
 
     public function Attachments() {
-        return new Attachments($this->source->Attachments);
+        return new Attachments($this->Source->Attachments);
     }
 
     public function HasAttachments() {
-        return count($this->source->Attachments) > 0 ? TRUE : FALSE;
+        return count($this->Source->Attachments) > 0 ? TRUE : FALSE;
     }
 
 }
