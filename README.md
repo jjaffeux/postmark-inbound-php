@@ -96,7 +96,7 @@ Raw
 
 ``` php
 $inbound->source; //array
-$inbound->json //raw json
+$inbound->json; //raw json
 ``` 
 
 
