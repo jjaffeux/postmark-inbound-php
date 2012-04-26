@@ -4,7 +4,7 @@
         {
             "package": "jjaffeux/postmark-inbound-php",
             "version": "dev-master",
-            "source-reference": "b583cff49d8b1ee0ec48f9c73e1873717e992e12"
+            "source-reference": "7c24631a6349d53f5e443b844771891fa2900714"
         }
     ],
     "packages-dev": null,

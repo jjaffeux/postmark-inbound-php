@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Postmark' => $baseDir . '/vendor/jjaffeux/postmark-inbound-php/lib/',
+    'Postmark' => $vendorDir . '/jjaffeux/postmark-inbound-php/lib/',
 );
