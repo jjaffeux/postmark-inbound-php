@@ -112,7 +112,7 @@ class Inbound {
     }
 
     public function Attachments() {
-        return New Attachments($this->source->Attachments);
+        return new Attachments($this->source->Attachments);
     }
 
     public function HasAttachments() {
@@ -120,7 +120,6 @@ class Inbound {
     }
 
 }
-
 
 Class Attachments extends \Postmark\Inbound  implements \Iterator{
 
@@ -133,7 +132,7 @@ Class Attachments extends \Postmark\Inbound  implements \Iterator{
         $this->position = $key;
 
         if( ! empty($this->attachments[$key])) {
-            return New Attachment($this->attachments[$key]);
+            return new Attachment($this->attachments[$key]);
         } else {
             return FALSE;
         }
@@ -144,7 +143,7 @@ Class Attachments extends \Postmark\Inbound  implements \Iterator{
     }
 
     function current() {
-        return New Attachment($this->attachments[$this->position]);
+        return new Attachment($this->attachments[$this->position]);
     }
 
     function key() {
