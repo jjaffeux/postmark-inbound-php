@@ -1,4 +1,5 @@
 <?php
+
 namespace Postmark;
 
 class Autoloader
