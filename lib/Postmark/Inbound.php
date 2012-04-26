@@ -111,7 +111,7 @@ class Inbound {
         return $objects;
     }
 
-    public function attachments() {
+    public function Attachments() {
         return New Attachments($this->source->Attachments);
     }
 
