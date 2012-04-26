@@ -12,7 +12,7 @@ With composer :
 ``` json
 {
     "require": {
-        "jjaffeux/postmark-inbound-php": "2.0.*"
+        "jjaffeux/postmark-inbound-php": ">=2.0"
     }
 }
 ```
