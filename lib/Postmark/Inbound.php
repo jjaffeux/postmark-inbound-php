@@ -7,22 +7,25 @@ include('Attachment.php');
 
 /**
  * This is a simple API wrapper for Postmark Inbound Hook (http://developer.postmarkapp.com/developer-inbound.html)
- *
- * Basic Usage:
- * 
- *     $inbound = new \Postmark\Inbound(file_get_contents('php://input'));
- *  OR for local testing
- *     $inbound = new \Postmark\Inbound(file_get_contents('/path/to/json'));
- * 
+ *  
  * @package    PostmarkInbound
  * @author     Joffrey Jaffeux
  * @copyright  2012 Joffrey Jaffeux
  * @license    MIT License
+ * @example    $inbound = new \Postmark\Inbound(file_get_contents('php://input'));
+ * @example    $inbound = new \Postmark\Inbound(file_get_contents('/path/to/json')); 
  */
 class Inbound {
 
+    public $json;
+    public $source;
+
     public function __construct($json)
     {
+        if(empty($json)) {
+            throw new PostmarkInboundException('Posmark Inbound Error: you must provide a json source');
+        }
+
         $this->json = $json;
         $this->source = $this->_jsonToArray();
     }
