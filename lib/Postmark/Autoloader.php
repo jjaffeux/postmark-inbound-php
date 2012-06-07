@@ -12,11 +12,13 @@ class Autoloader
 
     static public function autoload($class)
     {
-        if (0 !== strpos($class, 'Postmark\Inbound')) {
+        if (0 !== strpos($class, 'Postmark\Inbound'))
+        {
             return;
         }
 
-        if (file_exists($file = dirname(__FILE__) . '/' . str_replace('Postmark/', '', preg_replace("{\\\}", "/",($class))) . '.php')) {
+        if (file_exists($file = dirname(__FILE__) . '/' . str_replace('Postmark/', '', preg_replace("{\\\}", "/",($class))) . '.php'))
+        {
             require $file;
         }
     }

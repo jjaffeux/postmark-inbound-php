@@ -1,4 +1,5 @@
 <?php
+
 namespace Postmark;
 
 include('Exception.php');
@@ -22,7 +23,8 @@ class Inbound {
 
     public function __construct($Json = FALSE)
     {
-        if(empty($Json)) {
+        if(empty($Json))
+        {
             throw new InboundException('Posmark Inbound Error: you must provide a Json Source');
         }
 
@@ -34,7 +36,8 @@ class Inbound {
     {
         $Source = Json_decode($this->Json, FALSE);
 
-        switch (json_last_error()) {
+        switch (json_last_error())
+        {
             case JSON_ERROR_NONE:
                 return $Source;
             break;
@@ -64,16 +67,21 @@ class Inbound {
         return $this->Source->FromFull->Name;
     }
 
-    public function Headers($name = 'X-Spam-Status') {
-        foreach($this->Source->Headers as $header) {
-            if(isset($header->Name) AND $header->Name == $name) {
-                if($header->Name == 'Received-SPF') {
+    public function Headers($name = 'X-Spam-Status')
+    {
+        foreach($this->Source->Headers as $header)
+        {
+            if(isset($header->Name) AND $header->Name == $name)
+            {
+                if($header->Name == 'Received-SPF')
+                {
                     return self::_parseReceivedSpf($header->Value);
                 }
 
                 return $header->Value;
             }
-            else {
+            else
+            {
                 unset($header);
             }
         }
@@ -89,27 +97,28 @@ class Inbound {
 
     public function Recipients()
     {
-        return self::_parseRecipientsAndUndisclosedRecipients($this->Source->ToFull);
+        return self::_parseRecipients($this->Source->ToFull);
     }
 
     public function UndisclosedRecipients()
     {
-        return self::_parseRecipientsAndUndisclosedRecipients($this->Source->CcFull);
+        return self::_parseRecipients($this->Source->CcFull);
     }
 
-    private static function _parseRecipientsAndUndisclosedRecipients($recipients)
+    private static function _parseRecipients($recipients)
     {
-        $objects = array_map(function ($object) {
+        $objects = array_map(function ($object)
+        {
             $object = get_object_vars($object);
 
-            if( ! empty($object['Name'])) {
+            if( ! empty($object['Name']))
+            {
                 $object['Name'] = $object['Name'];
             }
-            else {
+            else
+            {
                 $object['Name'] = FALSE;
             }
-
-            $object['Email'] = $object['Email'];
 
             return (object)$object;
 
@@ -118,11 +127,13 @@ class Inbound {
         return $objects;
     }
 
-    public function Attachments() {
+    public function Attachments()
+    {
         return new Attachments($this->Source->Attachments);
     }
 
-    public function HasAttachments() {
+    public function HasAttachments()
+    {
         return count($this->Source->Attachments) > 0 ? TRUE : FALSE;
     }
 
