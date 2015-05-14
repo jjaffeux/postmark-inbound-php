@@ -32,6 +32,11 @@ class Postmark_Tests_Inbound extends PHPUnit_Framework_TestCase {
         $this->assertEquals($this->inbound->Date(), 'Thu, 5 Apr 2012 16:59:01 +0200');
     }
 
+    public function testOriginalRecipient()
+    {
+        $this->assertEquals($this->inbound->OriginalRecipient(), '451d9b70cf9364d23ff6f9d51d870251569e+ahoy@inbound.postmarkapp.com');
+    }
+
     public function testReplyTo()
     {
         $this->assertEquals($this->inbound->ReplyTo(), 'myUsersReplyAddress@theirDomain.com');
