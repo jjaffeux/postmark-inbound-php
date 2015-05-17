@@ -38,6 +38,7 @@ $inbound->FromEmail();
 $inbound->FromFull();
 $inbound->FromName();
 $inbound->Date();
+$inbound->OriginalRecipient();
 $inbound->ReplyTo();
 $inbound->MailboxHash();
 $inbound->Tag();
