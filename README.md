@@ -45,6 +45,7 @@ $inbound->Tag();
 $inbound->MessageID();
 $inbound->TextBody();
 $inbound->HtmlBody();
+$inbound->StrippedTextReply();
 ``` 
 
 Headers
