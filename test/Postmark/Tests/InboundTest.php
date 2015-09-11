@@ -67,6 +67,11 @@ class Postmark_Tests_Inbound extends PHPUnit_Framework_TestCase {
         $this->assertEquals(strlen($this->inbound->HtmlBody()), 15);
     }
 
+    public function testStrippedTextReply()
+    {
+        $this->assertEquals('Ok, thanks for letting me know!', $this->inbound->StrippedTextReply());
+    }
+
     public function testHeaders()
     {
         $this->assertEquals($this->inbound->Headers(), 'No');

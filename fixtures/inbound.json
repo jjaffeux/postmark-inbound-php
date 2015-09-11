@@ -34,6 +34,7 @@
   "MailboxHash": "ahoy",
   "TextBody": "[ASCII]",
   "HtmlBody": "[HTML(encoded)]",
+  "StrippedTextReply": "Ok, thanks for letting me know!",
   "Tag": "awesome",
   "Headers": [
     {
