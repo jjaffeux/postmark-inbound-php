@@ -69,24 +69,20 @@ class Inbound {
 
     public function Headers($name = 'X-Spam-Status')
     {
-        foreach($this->Source->Headers as $header)
+        foreach ($this->Source->Headers as $header)
         {
-            if(isset($header->Name) AND $header->Name == $name)
+            if (isset($header->Name) AND $header->Name == $name)
             {
-                if($header->Name == 'Received-SPF')
+                if ($header->Name == 'Received-SPF')
                 {
                     return self::_parseReceivedSpf($header->Value);
                 }
 
                 return $header->Value;
             }
-            else
-            {
-                unset($header);
-            }
         }
 
-        return $header ? $header : FALSE;
+        return FALSE;
     }
 
     private static function _parseReceivedSpf($header)
