@@ -1,7 +1,7 @@
 POSTMARK INBOUND HOOK
 =====================
 
-This is a simple API wrapper for Postmark Inbound Hook (http://developer.postmarkapp.com/developer-inbound.html)
+This is a simple API wrapper for Postmark Inbound Hook (http://developer.postmarkapp.com/developer-inbound-webhook.html)
 
 [![Build Status](https://secure.travis-ci.org/jjaffeux/postmark-inbound-php.png?branch=master)](http://travis-ci.org/jjaffeux/postmark-inbound-php)
 
