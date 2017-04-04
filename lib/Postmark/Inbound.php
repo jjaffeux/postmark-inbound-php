@@ -7,7 +7,7 @@ include('Attachments.php');
 include('Attachment.php');
 
 /**
- * This is a simple API wrapper for Postmark Inbound Hook (http://developer.postmarkapp.com/developer-inbound.html)
+ * This is a simple API wrapper for Postmark Inbound Hook (http://developer.postmarkapp.com/developer-inbound-webhook.html)
  *  
  * @package    PostmarkInbound
  * @author     Joffrey Jaffeux
