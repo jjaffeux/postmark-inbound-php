@@ -14,7 +14,24 @@ include('Attachment.php');
  * @copyright  2012 Joffrey Jaffeux
  * @license    MIT License
  * @example    $inbound = new \Postmark\Inbound(file_get_contents('php://input'));
- * @example    $inbound = new \Postmark\Inbound(file_get_contents('/path/to/Json')); 
+ * @example    $inbound = new \Postmark\Inbound(file_get_contents('/path/to/Json'));
+ * @method     string      OriginalRecipient
+ * @method     string      Subject
+ * @method     string      MessageID
+ * @method     string      ReplyTo
+ * @method     string      MailboxHash
+ * @method     string      Date
+ * @method     string      TextBody
+ * @method     string      HtmlBody
+ * @method     string      StrippedTextReply
+ * @method     string      Tag
+ * @method     string      Bcc
+ * @method     string      Cc
+ * @method     string      To
+ * @method     string      From
+ * @method     \stdClass[] BccFull
+ * @method     \stdClass[] CcFull
+ * @method     \stdClass[] ToFull
  */
 class Inbound {
 
