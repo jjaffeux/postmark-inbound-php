@@ -11,6 +11,7 @@ Class Attachment extends \Postmark\Inbound {
         $this->ContentType = $this->Attachment->ContentType;
         $this->ContentLength = $this->Attachment->ContentLength;
         $this->Content = $this->Attachment->Content;
+        $this->ContentID = array_key_exists('ContentID', $this->Attachment) ? $this->Attachment->ContentID : NULL; // Allows to use the attribute 'ContentID' if it exists. Returns NULL if it does not exist or the value of 'ContentID' if it does.
     }
 
     private function _read()
