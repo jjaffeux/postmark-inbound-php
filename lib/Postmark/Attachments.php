@@ -2,7 +2,7 @@
 
 namespace Postmark;
 
-Class Attachments extends \Postmark\Inbound  implements \Iterator {
+Class Attachments implements \Iterator {
 
     public function __construct($attachments)
     {
