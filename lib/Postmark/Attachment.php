@@ -2,11 +2,10 @@
 
 namespace Postmark;
 
-Class Attachment {
+Class Attachment extends \Postmark\Inbound {
 
     public function __construct($attachment)
     {
-//        $this->Attachment = $attachment;
         $this->Name = $attachment->Name;
         $this->ContentType = $attachment->ContentType;
         $this->ContentLength = $attachment->ContentLength;
